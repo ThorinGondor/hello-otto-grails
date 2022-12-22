@@ -1,6 +1,9 @@
 package hello.otto.grails
 
 import grails.validation.ValidationException
+
+import javax.validation.constraints.NotNull
+
 import static org.springframework.http.HttpStatus.*
 
 class UserDetailController {
@@ -14,8 +17,56 @@ class UserDetailController {
         respond userDetailService.list(params), model:[userDetailCount: userDetailService.count()]
     }
 
+    // http://localhost:port/userDetail/show?id=2
     def show(Long id) {
+        List<UserDetail> list = findAllByTeam("Warriors")
+        list.forEach {instance -> {
+            println("instance.userId: " + instance.userId)
+        }}
         respond userDetailService.get(id)
+    }
+
+    // http://localhost:port/userDetail/findAllByTeam?team=Warriors
+    def findAllByTeam(String team) {
+        println("findAllByTeam ===> ${team}" )
+        return UserDetail.findAllByTeam(team)
+    }
+
+    // http://localhost:7950/userDetail/findByWhere?teamParam=Warriors
+    // where 条件查询 非常灵活
+    def findByWhere(String teamParam) {
+        println("findByWhere ===> ${teamParam}" )
+        def query = UserDetail.where {
+            team == teamParam
+        }
+        UserDetail result = query.find()
+        println("findByWhere result ===> ${result.profession} ${result.district}" )
+
+        query = UserDetail.where {
+            year(insertTime) == 2021
+        }
+        respond query.find()
+    }
+
+    // http://localhost:port/userDetail/findByCriteria?team=Ferrari&profession=Driver&idMin=0&idMax=100
+    // 标准查询 criteria 重点
+    def findByCriteria(@NotNull String team, @NotNull String profession, @NotNull Long idMin, @NotNull Long idMax) {
+        def criteria = UserDetail.createCriteria()
+        def results = criteria {
+            between("id", idMin, idMax)
+            eq("team", team)
+            eq("profession", profession)
+            maxResults(10)
+            order("insertTime", "desc")
+        }
+        respond results
+    }
+
+    // 自定义 HQL 重要
+    def myUpdate(Long id, String team) {
+        Integer affectedRows = userDetailService.myUpdate(id, team)
+        println("my update ===> ${affectedRows}")
+        respond affectedRows
     }
 
     def create() {

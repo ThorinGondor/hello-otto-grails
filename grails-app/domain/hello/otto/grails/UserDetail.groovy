@@ -1,5 +1,7 @@
 package hello.otto.grails
 
+import grails.gorm.DetachedCriteria
+
 class UserDetail {
 
     Long id
@@ -16,5 +18,14 @@ class UserDetail {
         id nullable: false
         userId nullable: false
         isDeleted nullable: false
+    }
+
+    // GORM 支持模型中为事件注册处理方法
+    def onLoad() {
+        println("Loading User id = ${id}")
+    }
+
+    def afterLoad() {
+        println("User id = ${id} is loaded")
     }
 }

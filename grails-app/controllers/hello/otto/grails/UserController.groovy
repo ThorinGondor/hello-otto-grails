@@ -15,7 +15,7 @@ class UserController {
     }
 
     def show(Integer id) {
-        User user = userService.get(id)
+        User user = User.get(id) // 也可以写成 userService.get(id)
         respond user
     }
 

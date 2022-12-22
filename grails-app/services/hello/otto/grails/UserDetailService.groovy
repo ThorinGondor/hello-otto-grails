@@ -1,5 +1,6 @@
 package hello.otto.grails
 
+import grails.gorm.services.Query
 import grails.gorm.services.Service
 
 @Service(UserDetail)
@@ -15,4 +16,6 @@ interface UserDetailService {
 
     UserDetail save(UserDetail userDetail)
 
+    @Query("update ${UserDetail ud} set ${ud.team} = $team where ${ud.id} = ${id}")
+    Integer myUpdate(Long id, String team)
 }
