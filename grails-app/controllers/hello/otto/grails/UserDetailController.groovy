@@ -1,6 +1,7 @@
 package hello.otto.grails
 
 import grails.validation.ValidationException
+import org.springframework.web.servlet.ModelAndView
 
 import javax.validation.constraints.NotNull
 
@@ -14,15 +15,33 @@ class UserDetailController {
 
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
+        // 返回 GSP 文件渲染页面 对应的是 grails-app/views/userDetail/index.gsp
         respond userDetailService.list(params), model:[userDetailCount: userDetailService.count()]
+    }
+
+    def list(Integer max) {
+        params.max = Math.min(max ?: 10, 100)
+        // 也可以是返回一个新的 spring 的 modelAndView 视图
+        new ModelAndView("/userDetail/index", [userDetailList: userDetailService.list(params)])
+    }
+
+    def list2(Integer max) {
+        params.max = Math.min(max ?: 10, 100)
+        // 也可以是返回一个 render 指定一个GSP文件
+        render(view:  "index", model: [userDetailList: userDetailService.list(params), userDetailCount: userDetailService.count()])
+    }
+
+    def listJsonVersion(Integer max) {
+        params.max = Math.min(max ?: 10, 100)
+        def userDetails = userDetailService.list(params);
+        // 也可以是返回一个 json 数据 非常重要！！！
+        render(contentType: "application/json") {
+            [data: userDetails]
+        }
     }
 
     // http://localhost:port/userDetail/show?id=2
     def show(Long id) {
-        List<UserDetail> list = findAllByTeam("Warriors")
-        list.forEach {instance -> {
-            println("instance.userId: " + instance.userId)
-        }}
         respond userDetailService.get(id)
     }
 

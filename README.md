@@ -11,3 +11,5 @@
     grails run-app -port=7950
 ### 创建模型：
     grails create-domain-class Person
+### 创建一个拦截器：
+    grails create-interceptor OttoInterceptor
