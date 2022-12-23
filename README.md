@@ -13,3 +13,5 @@
     grails create-domain-class Person
 ### 创建一个拦截器：
     grails create-interceptor OttoInterceptor
+### postgresql 目前正在监听 192.168.0.107 如果您启动发现无法访问数据库那么一定是ip变了，请按照该链接修改数据库的 config
+    https://www.easck.com/cos/2022/0528/956985.shtml

@@ -6,6 +6,7 @@ package hello.otto.grails
 class OttoInterceptor {
 
     OttoInterceptor() {
+        // 除了 */login 不拦截，其他请求一律拦截
         matchAll().excludes(controller: "login")
     }
 

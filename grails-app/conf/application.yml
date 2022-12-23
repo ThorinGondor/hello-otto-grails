@@ -113,7 +113,7 @@ environments:
         dataSource:
             pooled: true
             dbCreate: "create-drop"
-            url: "jdbc:postgresql://localhost:5432/postgres?currentSchema=otto"
+            url: "jdbc:postgresql://192.168.0.107:5432/postgres?currentSchema=otto"
             driverClassName: "org.postgresql.Driver"
             dialect: org.hibernate.dialect.PostgreSQL82Dialect
             username: "postgres"
