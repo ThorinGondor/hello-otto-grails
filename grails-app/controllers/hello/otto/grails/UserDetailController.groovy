@@ -1,5 +1,6 @@
 package hello.otto.grails
 
+import grails.converters.JSON
 import grails.validation.ValidationException
 import org.springframework.web.servlet.ModelAndView
 
@@ -31,13 +32,16 @@ class UserDetailController {
         render(view:  "index", model: [userDetailList: userDetailService.list(params), userDetailCount: userDetailService.count()])
     }
 
+    // http://localhost:7950/userDetail/listJsonVersion
     def listJsonVersion(Integer max) {
         params.max = Math.min(max ?: 10, 100)
         def userDetails = userDetailService.list(params);
         // 也可以是返回一个 json 数据 非常重要！！！
-        render(contentType: "application/json") {
-            [data: userDetails]
-        }
+        def resp = [
+            'data': userDetails,
+            'status': "OK"
+        ]
+        render resp as JSON
     }
 
     // http://localhost:port/userDetail/show?id=2
