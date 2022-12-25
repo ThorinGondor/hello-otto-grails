@@ -16,7 +16,8 @@
 ### postgresql 目前正在监听 192.168.0.107 如果您启动发现无法访问数据库那么一定是ip变了，请按照该链接修改数据库的 config
     https://www.easck.com/cos/2022/0528/956985.shtml
 ### Docker 打包流程：
-    docker build . -t otto-grail-app:latest
-    docker images
-    docker run -d --name otto-grails-app --net=host otto-grail-app
-    docker ps
+    grails package
+    sudo docker build . -t otto-grail-app:latest
+    sudo docker images
+    sudo docker run -d --name otto-grails-app --net=host otto-grail-app
+    sudo docker ps
