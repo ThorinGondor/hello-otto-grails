@@ -1,5 +1,6 @@
 package hello.otto.grails
 
+import grails.plugins.redis.RedisService
 import grails.validation.ValidationException
 
 import static org.springframework.http.HttpStatus.*
@@ -7,6 +8,8 @@ import static org.springframework.http.HttpStatus.*
 class UserController {
 
     UserService userService
+
+    RedisService redisService
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
@@ -16,7 +19,16 @@ class UserController {
     }
 
     def show(Integer id) {
-        User user = User.get(id) // 也可以写成 userService.get(id)
+        User user = userService.get(id)
+        // grails 整合 redis
+        // redis 写入
+        redisService.memoize("otto_user_${id}"){
+            return user.name
+        }
+        // redis 读取
+        String name = redisService.memoize("otto_user_${id}"){
+        }
+        println "get name from redis server: ${name}"
         respond user
     }
 
