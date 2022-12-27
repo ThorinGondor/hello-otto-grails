@@ -1,6 +1,7 @@
 package hello.otto.grails
 
 import grails.validation.ValidationException
+
 import static org.springframework.http.HttpStatus.*
 
 class UserController {

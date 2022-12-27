@@ -13,4 +13,8 @@ class User {
 
     Date updateTime
 
+    static hasMany = [userAwards: UserAward]
+
+    static mappedBy = [userAwards: "user"]
+
 }
