@@ -15,6 +15,6 @@ class User {
 
     static hasMany = [userAwards: UserAward]
 
-    static mappedBy = [userAwards: "user"]
+    static mappedBy = [userAwards: "theUser"]
 
 }

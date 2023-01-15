@@ -50,7 +50,7 @@ redis:
     poolConfig:
         maxIdle: 10
         dosenotexist: true
-    host: 192.168.0.107
+    host: 192.168.0.108
     port: 6379
     timeout: 5000
     password: 8686886wscq
@@ -104,7 +104,7 @@ grails:
             encoding: UTF-8
             htmlcodec: xml
             codecs:
-                expression: html
+                expression: none
                 scriptlet: html
                 taglib: none
                 staticparts: none
@@ -125,7 +125,7 @@ environments:
         dataSource:
             pooled: true
             dbCreate: "create-drop"
-            url: "jdbc:postgresql://192.168.0.107:5432/postgres?currentSchema=otto"
+            url: "jdbc:postgresql://192.168.0.108:5432/postgres?currentSchema=otto"
             driverClassName: "org.postgresql.Driver"
             dialect: org.hibernate.dialect.PostgreSQL82Dialect
             username: "postgres"
